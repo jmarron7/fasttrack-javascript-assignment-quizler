@@ -44,8 +44,47 @@ export const createPrompt = ({ numQuestions = 1, numChoices = 2 } = {}) => {
   return result;
 }
 
-export const createQuestions = () => {
-  // TODO implement createQuestions
+export const createQuestions = (obj = {}) => {
+  // console.log('\n', 'INPUT: ', obj);
+
+  let questions = { ...obj };
+  let result = [];
+
+  let temp;
+  let getName;
+  let getMessage;
+  let getChoices = [];
+
+  for (let key in questions) {
+    if (!key.includes("choice") || !key.includes(temp)) {
+      temp = key // 'question-#'
+
+      getName = key;
+      getMessage = questions[key];
+    }
+
+    if (key.includes("choice") && key.includes(temp)) {
+      getChoices.push(questions[key]);
+    }
+
+    let keys = Object.keys(questions);
+    let nextIndex = keys.indexOf(key) + 1;
+    let nextItem = keys[nextIndex];
+
+    if (nextItem === undefined || !nextItem.includes(temp)) { 
+      result.push(
+        {
+          type: 'list',
+          name: getName,
+          message: getMessage,
+          choices: getChoices
+        }
+      );
+      getChoices = [];
+    }
+  }
+  // console.log('\n', 'OUTPUT: ', result);
+  return result;
 }
 
 export const readFile = path =>
