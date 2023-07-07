@@ -1,21 +1,25 @@
 import fs from 'fs'
 
-export const chooseRandom = (items = [], quantity) => {
-  let prev = []
-  let selected = []
-  let randIdx 
-  for (let i =0; i < quantity; i++) {
-    do {
-      randIdx = Math.floor(Math.random() * items.length)
-    } while (!prev.includes(randIdx))
-
-    prev.push(randIdx)
-    selected.push(items[randIdx])
+export const chooseRandom = (array = [], numItems) => {
+  if (numItems < 1 || numItems > array.length || numItems === undefined) {
+    numItems = Math.floor(Math.random() * (array.length) + 1);
   }
-  return selected
+
+  if (array.length <= 1) return array;
+
+  let questions = [...array];
+
+  for (let i = questions.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i)
+    let k = questions[i]
+    questions[i] = questions[j]
+    questions[j] = k
+  }
+
+  return questions.slice(0, numItems);
 }
 
-export const createPrompt = () => {
+export const createPrompt = (object) => {
   // TODO implement createPrompt
 }
 
