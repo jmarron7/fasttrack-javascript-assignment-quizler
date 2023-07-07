@@ -45,8 +45,6 @@ export const createPrompt = ({ numQuestions = 1, numChoices = 2 } = {}) => {
 }
 
 export const createQuestions = (obj = {}) => {
-  // console.log('\n', 'INPUT: ', obj);
-
   let questions = { ...obj };
   let result = [];
 
@@ -57,7 +55,7 @@ export const createQuestions = (obj = {}) => {
 
   for (let key in questions) {
     if (!key.includes("choice") || !key.includes(temp)) {
-      temp = key // 'question-#'
+      temp = key 
 
       getName = key;
       getMessage = questions[key];
@@ -83,7 +81,6 @@ export const createQuestions = (obj = {}) => {
       getChoices = [];
     }
   }
-  // console.log('\n', 'OUTPUT: ', result);
   return result;
 }
 
